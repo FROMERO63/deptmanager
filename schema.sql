@@ -5,7 +5,8 @@ USE business_db;
 
 CREATE TABLE departments (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE roles (
@@ -13,8 +14,10 @@ CREATE TABLE roles (
     job_title VARCHAR(100) NOT NULL,
     salary INT NOT NULL,
     /* reference departments */
-    dept_id INT NOT NULL FOREIGN_KEY
-
+    dept_id INT NOT NULL,
+    FOREIGN KEY (dept_id)
+    REFERENCES departments(id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE managers (
