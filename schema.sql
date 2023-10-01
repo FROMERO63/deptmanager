@@ -20,12 +20,6 @@ CREATE TABLE roles (
     ON DELETE SET NULL
 );
 
-CREATE TABLE managers (
-    manager_id INT NOT NULL AUTO_INCREMENT,
-    manager_name VARCHAR(100) NOT NULL,
-    /* reference departments */
-    dept_id INT NOT NULL FOREIGN_KEY
-);
 
 CREATE TABLE employees (
     employee_id INT NOT NULL AUTO_INCREMENT,
