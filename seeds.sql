@@ -20,10 +20,10 @@ VALUES
     ("Sales Assistant", 70000, 4),
     ("Sales Manager", 130000, 4);
 
-INSERT INTO employees (first_name, last_name, job_title, manager)
+INSERT INTO employees (first_name, last_name, role_id, manager)
 VALUES
-    ("Jack","Porter", "Paralegal","John Johnson"),
-    ("Monica","Rodriguez", "Software Engineer", "Martha Kim"),
-    ("Paul","Park", "Accountant", "Taylor White"),
-    ("Whitney","Snow", "Lead Sales", "Juan Morales"),
+    ("Jack","Porter", 8 ,"John Johnson"),
+    ("Monica","Rodriguez", 1 , "Martha Kim"),
+    ("Paul","Park", 4, "Taylor White"),
+    ("Whitney","Snow", 10, "Juan Morales");
 

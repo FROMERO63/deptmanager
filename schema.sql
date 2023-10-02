@@ -10,32 +10,22 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE roles (
-    role_id INT NOT NULL AUTO_INCREMENT,
-    job_title VARCHAR(100) NOT NULL,
+    role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    job_title TEXT(100) NOT NULL,
     salary INT NOT NULL,
-    /* reference departments */
-    dept_id INT NOT NULL,
+    dept_id INT,
     FOREIGN KEY (dept_id)
     REFERENCES departments(id)
     ON DELETE SET NULL
 );
 
-
 CREATE TABLE employees (
-    employee_id INT NOT NULL AUTO_INCREMENT,
+    employee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-    job_title VARCHAR(100) NOT NULL FOREIGN_KEY,
-    /* reference other tables
-    dept_id INT NOT NULL, departments
-    salary INT NOT NULL, roles
-    managers VARCHAR(100) NOT NULL, managers
-    */
+    role_id INT,
+    manager VARCHAR(100) NOT NULL,
+    FOREIGN KEY (role_id)
+    REFERENCES roles(role_id)
+    ON DELETE SET NULL
 );
-
-
-
-DELETE FROM departments
-WHERE id = 2;
-
-SELECT * FROM departments;

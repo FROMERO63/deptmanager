@@ -30,9 +30,21 @@ quetions = [
   }
 ];
 
-function viewAllEmployees(){
-  
+const selectDepts= db.query('SELECT * FROM departments', function(err,results){
+  console.log(results);
+});
 
+const selecRoles= db.query('SELECT roles.job_title, roles.role_id, departments.name, roles.salary FROM departments JOIN roles ON departments.id=roles.dept_id', function(err,results){
+  console.log(results);
+});
+
+const selecEmployees= db.query(
+  'SELECT employees.employee_id, employees.first_name, employees.last_name, employees.job_title, department.name, roles.salary, employees.manager FROM departments JOIN roles ON departments.id=roles.dept_id JOIN employees ON roles.job_title=employees.job_title', function(err,results){
+  console.log(results);
+});
+
+function viewAllEmployees(){
+  selectDepts;
 };
 
 function updateEmployeeRole(){
@@ -40,7 +52,7 @@ function updateEmployeeRole(){
 };
 
 function viewAllRoles(){
-  
+  selecRoles;
 };
 
 function addRole(){
