@@ -26,9 +26,11 @@ quetions = [
     type: 'list',
     message: 'What would you like to do? (Use arrow keys)',
     name: 'list',
-    choices: ['View All Employees','Update Employee Role','View All Roles','Add Role','View All Departments','Add Department']
+    choices: ['View All Employees','Add Employee','Update Employee Role','View All Roles','Add Role','View All Departments','Add Department']
   }
-]
+];
+
+//variables with select queries
 const selectDepts= db.query('SELECT * FROM departments', function(err,results){
   console.log(results);
 });
@@ -42,12 +44,32 @@ const selectEmployees= db.query(
   console.log(results);
 });
 
+//add queries
+
+const addDept = db.query(`INSERT INTO departments (name) VALUES ("${responses["deptname"]}")`, function(err,results){
+  console.log(results);
+});
+
+const addARole = db.query(`INSERT INTO roles (job_title, salary, dept_id) VALUES ("${responses["jobtitle"]}",${responses["salary"]},${responses["deptid"]})`, function(err,results){
+  console.log(results);
+});
+
+const addAnEmployee = db.query(`INSERT INTO employees (first_name, last_name, role_id, manager) VALUES ("${responses["firstname"]}","${responses["lastname"]}",${responses["roleid"]},"${responses["manager"]}")`, function(err,results){
+  console.log(results);
+});
+
+//edit query
+const editAnEmployee = db.query(`UPDATE employees SET role_id="${responses["updateroleid"]}" WHERE employee_id="${responses["selectemployeeid"]}"`, function(err,results){
+  console.log(results);
+});
+
+//varaibles to functions
 function viewAllEmployees(){
   selectEmployees;
 };
 
 function updateEmployeeRole(){
-  
+  editAnEmployee;
 };
 
 function viewAllRoles(){
@@ -55,7 +77,7 @@ function viewAllRoles(){
 };
 
 function addRole(){
-  
+  addARole;
 };
 
 function viewAllDepartments(){
@@ -63,12 +85,16 @@ function viewAllDepartments(){
 };
 
 function addDepartment(){
-  
+  addDept;
+};
+
+function addEmployee(){
+  addAnEmployee;
 };
 
 function startPrompt(){
-  inquirer.prompt(quetions).then((responses) => {
-  let listResponse = response["list"];
+  inquirer.prompt(questions.list).then((responses) => {
+  let listResponse = responses["list"];
   console.log(listResponse);
   if( listResponse === "View All Employees"){
     viewAllEmployees;
@@ -88,14 +114,12 @@ function startPrompt(){
   else if( listResponse === "Add Department"){
     addDepartment;
   }
+  else if( listResponse === "Add Employee"){
+    addEmployee;
+  }
   else (console.log('error in choice'));
   }
-)}
-
-// Query database
-db.query('SELECT * FROM departments', function (err, results) {
-  console.log(results);
-});
+)};
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
