@@ -148,6 +148,10 @@ function addAnEmployee () {
       console.log("there was an error: " + err);
       return
     };
+    const roles = res.map(({ role_id, job_title }) => ({
+      name: job_title,
+      value: role_id,
+  }));
     inquirer.prompt([
       {type: "input",
       name: "firstname",
@@ -160,9 +164,7 @@ function addAnEmployee () {
       {type: "list",
       name: "roleid",
       message: "Select a role",
-      choices: res.map(
-        (roles)=>roles.job_title
-      ),
+      choices:roles,
       },
       {type: "input",
       name: "manager",
@@ -173,7 +175,7 @@ function addAnEmployee () {
     db.query("INSERT INTO employees SET ?", {
         first_name: answers.firstname,
         last_name: answers.lastname,
-        role_id: answers.id,
+        role_id: answers.roleid,
         manager: answers.manager,
     },
     (err,res)=>{
@@ -205,20 +207,20 @@ function updateAnEmployee() {
         ),
         },
         {type: "list",
-        name: "roles",
+        name: "role",
         message: "Choose a new role",
         choices: resRoles.map(
-          (roles)=>roles.job_title),
+          (role)=>role.job_title),
         },
       ])
       .then((answers)=>{
         const employee = resEmployees.find(
           (employee) => `${employee.first_name} ${employee.last_name}` === answers.employee);
         const role = resRoles.find(
-            (role) => role.job_title === answers.roles);
+            (role) => role.job_title === answers.role);
         const query ="UPDATE employees SET role_id = ? WHERE role_id = ?";
         //this is inserting a null value into role
-                    db.query(query,[role.job_title, employee.role_id],
+                    db.query(query,[role.role_id, employee.role_id],
                       (err, res) => {
                         if (err) throw err;
                         console.log(
